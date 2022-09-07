@@ -424,7 +424,7 @@ class BaseMerkleTree(HashEngine, metaclass=ABCMeta):
         """
         return json.dumps(self.serialize(), sort_keys=True, indent=indent)
 
-    def export(self, filepath, indent=4):
+    def export(self, fp, indent=2):
         """
         Exports the JSON serialization of the tree into the provided
         file.
@@ -432,27 +432,23 @@ class BaseMerkleTree(HashEngine, metaclass=ABCMeta):
         .. warning:: The file is created if it does not exist. If the file
             already exists then it will be overwritten.
 
-        :param filepath: relevant path of export file with respect to the
-            current working directory.
-        :type filepath: str
+        :param fp: pointer to file object.
+        :type fp: file-like object
         """
-        with open(filepath, 'w') as f:
-            json.dump(self.serialize(), f, indent=indent)
+        json.dump(self.serialize(), fp, indent=indent)
 
     @classmethod
-    def fromJSONFile(cls, filepath):
+    def fromJSONFile(cls, fp):
         """
         Loads a tree from the provided JSON file, the latter being the result
         of an export (cf. the ``export()`` method).
 
-        :param filepath: relative path of file with respect to the current
-            working directory.
-        :type filepath: str
+        :param fp: rpointer to file object.
+        :type fp: file-like object
         :returns: the loaded tree
         :rtype: MerkleTree
         """
-        with open(filepath, 'r') as f:
-            obj = json.load(f)
+        obj = json.load(fp)
 
         hashes = obj.pop('hashes')
         tree = cls(**obj)
