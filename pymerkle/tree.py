@@ -476,6 +476,8 @@ class BaseMerkleTree(HashEngine, metaclass=ABCMeta):
         :returns: the loaded tree
         :rtype: MerkleTree
         """
+        obj = json.loads(txt)
+        
         hashes = obj.pop('hashes')
         tree = cls(**obj)
 
