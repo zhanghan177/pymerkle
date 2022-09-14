@@ -469,6 +469,33 @@ class BaseMerkleTree(HashEngine, metaclass=ABCMeta):
 
         return tree
 
+    @classmethod
+    def fromJSONText(cls, txt: str):
+        """
+        Loads a tree from the provided JSON text, the latter being the result
+        of toJSONText() method.
+
+        :param txt: string content of the JSON text.
+        :type txt: str
+        :returns: the loaded tree
+        :rtype: MerkleTree
+        """
+        hashes = obj.pop('hashes')
+        tree = cls(**obj)
+
+        nr_hashes = len(hashes)
+        sys.stdout.write('\nLoaded file content\n')
+        for count, checksum in enumerate(hashes):
+
+            value = checksum.encode(tree.encoding)
+            tree.add_leaf(Leaf(value=value))
+
+            sys.stdout.write('%d/%d leaves\r' % (count + 1, nr_hashes))
+            sys.stdout.flush()
+
+        return tree
+
+
 
 class MerkleTree(BaseMerkleTree):
     """
