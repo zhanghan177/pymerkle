@@ -8,7 +8,7 @@ import io
 import pymerkle
 
 
-URL = "https://github.com/fmerg/pymerkle"
+URL = "https://github.com/zhanghan177/pymerkle"
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
 
@@ -35,7 +35,7 @@ def main():
        project_urls={
             "github": URL,
             "source": "%s/%s" % (URL, "tree/master/%s" % pymerkle.__name__),
-            "docs": "https://%s.readthedocs.io/en/latest/" % pymerkle.__name__,
+            # "docs": "https://%s.readthedocs.io/en/latest/" % pymerkle.__name__,
        },
        author="fmerg",
        author_email="fmerg@protonmail.com",

@@ -16,7 +16,8 @@ for f in glob.glob(os.path.join(exports_dir, '*')):
 def test_export():
     tree = MerkleTree.init_from_records(*['%d-th record' % i for i in range(12)])
     export_path = os.path.join(exports_dir, '%s.json' % generate_uuid())
-    tree.export(filepath=export_path)
+    with open(export_path, 'w') as fp:
+        tree.export(fp=fp)
 
     with open(export_path, 'rb') as f:
         exported = json.load(f)
@@ -45,6 +46,18 @@ def test_export():
 def test_fromJSONFile():
     tree = MerkleTree.init_from_records(*['%d-th record' % i for i in range(12)])
     export_path = os.path.join(exports_dir, '%s.json' % generate_uuid())
-    tree.export(filepath=export_path)
 
-    assert tree.serialize() == MerkleTree.fromJSONFile(export_path).serialize()
+    with open(export_path, 'w') as fp:
+        tree.export(fp=fp)
+
+    with open(export_path, 'r') as fp:
+        assert tree.serialize() == MerkleTree.fromJSONFile(fp).serialize()
+
+
+def test_fromJSONText():
+    orig_tree = MerkleTree.init_from_records(*['%d-th record' % i for i in range(12)])
+    conv_tree = MerkleTree.fromJSONText(
+        orig_tree.toJSONText()
+    )
+
+    assert orig_tree.serialize() == conv_tree.serialize()

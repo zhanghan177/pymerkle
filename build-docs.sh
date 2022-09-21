@@ -16,8 +16,8 @@ usage() { echo -n "$usage_string" 1>&2; }
 # TODO: Derive the following default values from package meta
 PROJECT="pymerkle"
 SOURCE_CODE="pymerkle"
-VERSION="3.0.0"
-AUTHOR="fmerg"
+VERSION="3.0.0-zhanghan177"
+AUTHOR="zhanghan177"
 
 LANG="en"
 BROWSER=
